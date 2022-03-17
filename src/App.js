@@ -7,7 +7,11 @@ function App() {
   return (
     <div>
       <Navbar></Navbar>
-      <Cards></Cards>
+      <div className="second">
+        <Cards></Cards>
+        <Cards></Cards>
+        <Cards></Cards>
+      </div>
     </div>
   );
 }
