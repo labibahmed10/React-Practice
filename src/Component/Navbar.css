@@ -1,0 +1,22 @@
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 15px;
+  background-color: lavender;
+}
+
+.linklist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.linklist li {
+  list-style: none;
+  margin-right: 25px;
+}
+
+.linklist li a {
+  text-decoration: solid;
+}
+
