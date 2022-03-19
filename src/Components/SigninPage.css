@@ -1,0 +1,19 @@
+.form {
+  text-align: center;
+  padding: 20px;
+  background-color: rgb(22, 24, 97);
+  color: white;
+}
+
+.form input {
+  padding: 15px;
+}
+
+.form button {
+  padding: 10px 20px;
+  color: white;
+  background-color: gray;
+  border: 0;
+  outline: none;
+  font-size: 18px;
+}

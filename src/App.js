@@ -1,19 +1,9 @@
 import "./App.css";
-
-import Navbar from "./Component/Navbar";
-import Cards from "./Component/Cards";
+import Main from "./Components/Main";
+import Form from "./FORM_CONTROL/Form";
 
 function App() {
-  return (
-    <div>
-      <Navbar></Navbar>
-      <div className="second">
-        <Cards></Cards>
-        <Cards></Cards>
-        <Cards></Cards>
-      </div>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default App;
