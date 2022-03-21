@@ -1,0 +1,21 @@
+.singleUser {
+  text-align: center;
+  margin: 10px;
+  background-color: wheat;
+  padding: 15px;
+}
+
+button {
+  border: 0;
+  padding: 12px 20px;
+  background-color: rgb(36, 113, 180);
+  color: aliceblue;
+  border-radius: 20px;
+  box-shadow: 10px 7px 10px rgba(0, 0, 0, 0.253);
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+  transition: all 0.3s linear;
+}
