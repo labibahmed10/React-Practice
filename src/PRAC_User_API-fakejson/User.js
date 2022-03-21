@@ -1,4 +1,31 @@
-import React, { useState } from "react";
+ /* Paste all this to your main file 
+function App() {
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    fetch("fakeData.json")
+      .then((res) => res.json())
+      .then((data) => setUser(data.results));
+  }, []);
+
+  const [item, setItem] = useState(0);
+  const [cost, setCost] = useState(0);
+
+  return (
+    <div id="baap">
+      <div className="container">
+        {users.map((user, index) => (
+          <User key={index} user={user} item={item} setItem={setItem} cost={cost} setCost={setCost}></User>
+        ))}
+      </div>
+
+      <div>
+        <AddCart ida={users} item={item} setItem={setItem} cost={cost} setCost={setCost}></AddCart>
+      </div>
+    </div>
+  ); */
+
+/* import React, { useState } from "react";
 
 import "./User.css";
 
@@ -36,4 +63,5 @@ const User = (props) => {
   );
 };
 
-export default User;
+export default User; */
+ 

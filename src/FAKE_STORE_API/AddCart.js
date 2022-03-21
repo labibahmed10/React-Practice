@@ -1,4 +1,4 @@
-/* import React from "react";
+import React from "react";
 import "./AddCard.css";
 
 const AddCart = (props) => {
@@ -20,4 +20,3 @@ const AddCart = (props) => {
 };
 
 export default AddCart;
- */

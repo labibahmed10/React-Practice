@@ -38,7 +38,7 @@
 }
  */
 
-.container {
+/* .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -47,9 +47,17 @@
 
 #baap {
   position: relative;
-  /* display: flex;
-  justify-content: space-between; */
+
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 10px;
+}
+ */
+.cardstore {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background-color: rgb(16, 83, 59);
+  color: aliceblue;
+  padding: 20px;
 }
