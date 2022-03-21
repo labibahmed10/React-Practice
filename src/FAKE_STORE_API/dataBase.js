@@ -75,8 +75,10 @@ const deleteFromDataBase = (id) => {
 
   const prevQuantity = parsify[id];
 
-  if (prevQuantity) {
-    parsify[id] = prevQuantity - 1;
+  if (prevQuantity >= 0) {
+    // parsify[id] = prevQuantity - 1;
+    delete parsify[id];
+
     localStorage.setItem("shopping_cart", JSON.stringify(parsify));
   }
 };
