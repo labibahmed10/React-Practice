@@ -1,15 +1,11 @@
 import React from "react";
-import { addToDataBase } from "./dataBase";
+import { addToDataBase, deleteFromDataBase } from "./dataBase";
 import "./Store.css";
 
 const Store = (props) => {
-  console.log(props.item);
+  // console.log(props.item);
 
   const { image, title, description, price, id } = props.item;
-
-  const addToStorage = () => {
-    addToDataBase(id);
-  };
 
   return (
     <div className="card">
@@ -18,9 +14,12 @@ const Store = (props) => {
         <h4>{title.slice(0, 10)}</h4>
         <p>{description.slice(0, 30)}</p>
         <h4>{price}</h4>
-        <div>
-          <button onClick={addToStorage} className="btn">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <button onClick={() => addToDataBase(id)} className="btn">
             Add to Cart
+          </button>
+          <button onClick={() => deleteFromDataBase(id)} className="btn">
+            Remove from Cart
           </button>
         </div>
       </div>
