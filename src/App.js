@@ -1,7 +1,12 @@
 import "./App.css";
 import app from "./firebase.init";
 
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { Button, Form } from "react-bootstrap";
 import { useState } from "react";
 
@@ -36,24 +41,41 @@ function App() {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
+      return;
     }
 
     setValidated(true);
 
+    const verification = () => {
+      sendEmailVerification(auth.uid).then(() => {
+        console.log("verification sent");
+      });
+    };
+
     if (registered) {
       signInWithEmailAndPassword(auth, email, password)
-        .then((res) => console.log(res.user))
-        .catch((error) => console.log(error));
+        .then((res) => {
+          setError("");
+          console.log(res.user);
+        })
+        .catch((error) => setError(error.message));
     } else {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => console.log(res.user))
-        .catch((error) => console.log(error.message));
+        .then((res) => {
+          console.log(res.user);
+          setEmail("");
+          setPassword("");
+          setError("");
+          verification();
+        })
+        .catch((error) => setError(error.message));
     }
   };
 
   return (
     <div>
       <div className="w-50 mx-auto mt-5">
+        <h1 className="text-center text-success">{registered ? "Please Login" : "Register Now"}</h1>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -74,7 +96,7 @@ function App() {
           </Form.Group>
 
           {email || password ? "" : <p className="text-danger">{error}</p>}
-
+          {<p className="text-danger">{error}</p>}
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check onClick={handleCheck} type="checkbox" label="Already Registered?" />
           </Form.Group>
