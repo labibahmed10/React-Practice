@@ -1,56 +1,49 @@
 import "./App.css";
-
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GithubAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
 import app from "./firebase.init";
+
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Button, Form } from "react-bootstrap";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 const auth = getAuth(app);
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [validated, setValidated] = useState(false);
-  const [register, setRegister] = useState(false);
+  const [error, setError] = useState("");
+  const [registered, setRegistered] = useState(false);
 
-  const getEmailValue = (e) => {
+  const handleEmailInput = (e) => {
     setEmail(e.target.value);
   };
-  const getPasswordValue = (e) => {
+
+  const handlePasswordInput = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleCheck = (e) => {
-    setRegister(e.target.checked);
+  const handleCheck = (event) => {
+    setRegistered(event.target.checked);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!email || !password) {
+      setError("Fill Up the Form");
+    }
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }
 
-    // if (!/^(?=.*[@$!%*#?&])/.test(password)) {
-    //   setError("special character needed");
-    //   return;
-    // }
-
     setValidated(true);
-    setError("");
 
-    if (register) {
+    if (registered) {
       signInWithEmailAndPassword(auth, email, password)
-        .then((res) => console.log(res.usre))
-        .catch((error) => setError(error.message));
+        .then((res) => console.log(res.user))
+        .catch((error) => console.log(error));
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((res) => console.log(res.user))
@@ -59,34 +52,34 @@ function App() {
   };
 
   return (
-    <div className="mx-auto w-50 mt-5">
-      <h2>Please {register ? "LOGIN" : "Register"}</h2>
+    <div className="w-50 mx-auto mt-5">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control onBlur={getEmailValue} type="email" placeholder="Enter email" required />
-          <Form.Control.Feedback type="invalid">Please provide a valid email.</Form.Control.Feedback>
+          <Form.Control onBlur={handleEmailInput} type="email" placeholder="Enter email" required />
+
           <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            onBlur={getPasswordValue}
+            onBlur={handlePasswordInput}
             type="password"
             placeholder="Password"
-            required
             autoComplete="true"
+            required
           />
-          <p className="text-danger">{error}</p>
-          <Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
         </Form.Group>
 
+        {email || password ? "" : <p className="text-danger">{error}</p>}
+
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check onChange={handleCheck} type="checkbox" label="Already signed In?" />
+          <Form.Check onClick={handleCheck} type="checkbox" label="Already Registered?" />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          {register ? "Login" : "Register"}
+
+        <Button variant="danger" type="submit">
+          {registered ? "Log In" : "Register"}
         </Button>
       </Form>
     </div>
