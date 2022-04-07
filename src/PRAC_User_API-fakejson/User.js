@@ -1,4 +1,4 @@
- /* Paste all this to your main file 
+/*  Paste all this to your main file 
 function App() {
   const [users, setUser] = useState([]);
 
