@@ -47,41 +47,46 @@ function App() {
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((res) => console.log(res.user))
-        .catch((error) => setError(error.message));
+        .catch((error) => console.log(error.message));
     }
   };
 
   return (
-    <div className="w-50 mx-auto mt-5">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control onBlur={handleEmailInput} type="email" placeholder="Enter email" required />
+    <div>
+      <div className="w-50 mx-auto mt-5">
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control onBlur={handleEmailInput} type="email" placeholder="Enter email" required />
 
-          <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
-        </Form.Group>
+            <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            onBlur={handlePasswordInput}
-            type="password"
-            placeholder="Password"
-            autoComplete="true"
-            required
-          />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              onBlur={handlePasswordInput}
+              type="password"
+              placeholder="Password"
+              autoComplete="true"
+              required
+            />
+          </Form.Group>
 
-        {email || password ? "" : <p className="text-danger">{error}</p>}
+          {email || password ? "" : <p className="text-danger">{error}</p>}
 
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check onClick={handleCheck} type="checkbox" label="Already Registered?" />
-        </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check onClick={handleCheck} type="checkbox" label="Already Registered?" />
+          </Form.Group>
 
-        <Button variant="danger" type="submit">
-          {registered ? "Log In" : "Register"}
-        </Button>
-      </Form>
+          <Button variant="danger" type="submit">
+            {registered ? "Log In" : "Register"}
+          </Button>
+        </Form>
+      </div>
+      <div>
+        <h2 className="text-center mt-5">Here are some of the User information</h2>
+      </div>
     </div>
   );
 }
