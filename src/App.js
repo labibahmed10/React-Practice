@@ -5,7 +5,9 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { Button, Form } from "react-bootstrap";
 import { useState } from "react";
@@ -18,6 +20,8 @@ function App() {
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
   const [registered, setRegistered] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [name, setName] = useState("");
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -29,6 +33,10 @@ function App() {
 
   const handleCheck = (event) => {
     setRegistered(event.target.checked);
+  };
+
+  const handleNameInput = (event) => {
+    setName(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -46,16 +54,11 @@ function App() {
 
     setValidated(true);
 
-    const verification = () => {
-      sendEmailVerification(auth.uid).then(() => {
-        console.log("verification sent");
-      });
-    };
-
     if (registered) {
       signInWithEmailAndPassword(auth, email, password)
         .then((res) => {
           setError("");
+          setSuccess("SuccessFully Loged In");
           console.log(res.user);
         })
         .catch((error) => setError(error.message));
@@ -65,18 +68,35 @@ function App() {
           console.log(res.user);
           setEmail("");
           setPassword("");
-          setError("");
+          setSuccess("SuccessFully Registered");
           verification();
+          updateProfile(auth.currentUser, { displayName: name }).then(() => console.log("Updated"));
         })
         .catch((error) => setError(error.message));
     }
   };
 
+  const verification = () => {
+    sendEmailVerification(auth.currentUser).then(() => {
+      console.log("verification sent");
+    });
+  };
+  const handlePasswordChange = () => {
+    sendPasswordResetEmail(auth, email).then(() => console.log("password sent to there"));
+  };
   return (
     <div>
       <div className="w-50 mx-auto mt-5">
         <h1 className="text-center text-success">{registered ? "Please Login" : "Register Now"}</h1>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          {!registered && (
+            <Form.Group className="mb-3" controlId="formBasicText">
+              <Form.Label>Your name</Form.Label>
+              <Form.Control onBlur={handleNameInput} type="text" placeholder="Youre name" required />
+              <Form.Text className="text-muted">Please enter your name.</Form.Text>
+            </Form.Group>
+          )}
+
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control onBlur={handleEmailInput} type="email" placeholder="Enter email" required />
@@ -97,9 +117,15 @@ function App() {
 
           {email || password ? "" : <p className="text-danger">{error}</p>}
           {<p className="text-danger">{error}</p>}
+          {<p className="text-success">{success}</p>}
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check onClick={handleCheck} type="checkbox" label="Already Registered?" />
           </Form.Group>
+
+          <Button onClick={handlePasswordChange} variant="link">
+            Forgot Password?
+          </Button>
+          <br />
 
           <Button variant="danger" type="submit">
             {registered ? "Log In" : "Register"}
